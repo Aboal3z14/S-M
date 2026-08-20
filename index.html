@@ -3,27 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M &amp; S | October 2026</title>
-
-<!-- ============================================================
-     EDIT ME: swap fonts, colors, names, date, photos below.
-     Search for "EDIT ME" comments to find every editable spot.
-     Search for "data-i18n" to find translatable text — edit the
-     TRANSLATIONS object near the bottom of the <script> to change
-     English/Arabic copy.
-     ============================================================ -->
+<title>M & S | October 2026</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <style>
   :root{
-    /* ---- EDIT ME: palette ---- */
-    --ink:        #1F3A34;   /* deep botanical green */
+    --ink:        #1F3A34;
     --ink-soft:   #2E4C44;
-    --ivory:      #FAF6EF;   /* page background */
+    --ivory:      #FAF6EF;
     --paper:      #FFFFFF;
-    --gold:       #B8935A;   /* accent */
+    --gold:       #B8935A;
     --blush:      #E8D9CE;
     --text:       #241F1C;
     --text-soft:  #5C564F;
@@ -41,7 +32,7 @@
     font-family:var(--font-body);
     font-weight:300;
     -webkit-font-smoothing:antialiased;
-    overflow:hidden; /* released by JS once the intro ishes */
+    overflow:hidden;
   }
   body.ready{ overflow:auto; }
 
@@ -98,7 +89,6 @@
   .hero video, .hero .hero-fallback{
     position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   }
-  /* EDIT ME: hero fallback gradient stands in until you add a real photo/video */
   .hero-fallback{
     background:
       radial-gradient(circle at 30% 20%, rgba(184,147,90,0.35), transparent 55%),
@@ -143,7 +133,7 @@
     margin-top:4px; font-size:10px; letter-spacing:.2em; text-transform:uppercase; opacity:.75;
   }
 
-  /* ---------- DIVIDER (signature element) ---------- */
+  /* ---------- DIVIDER ---------- */
   .divider{
     display:flex; align-items:center; justify-content:center;
     gap:14px; padding:56px 20px 0;
@@ -330,84 +320,199 @@
   }
 
   /* ============================================================
-     INTRO: ENVELOPE + LANGUAGE CHOOSER
+     INTRO: MODERN ENVELOPE + LANGUAGE CHOOSER
      ============================================================ */
   #intro{
     position:fixed; inset:0; z-index:1000;
     display:flex; align-items:center; justify-content:center;
     background:
-      radial-gradient(circle at 50% 30%, #2E4C44 0%, #14251F 70%, #0D1613 100%);
-    transition:opacity .8s ease, visibility .8s ease;
+      radial-gradient(ellipse at 50% 0%, #3a4f48 0%, #1c2e28 50%, #0f1a16 100%);
+    transition:opacity .9s cubic-bezier(.65,0,.35,1), visibility .9s cubic-bezier(.65,0,.35,1);
   }
   #intro.hide{ opacity:0; visibility:hidden; pointer-events:none; }
 
-  /* -- envelope -- */
+  /* -- envelope stage -- */
   .envelope-scene{
     position:relative;
-    width:min(420px,84vw);
-    aspect-ratio:3/4;
+    width:min(460px,86vw);
+    aspect-ratio:3/4.2;
     perspective:1400px;
+    will-change:transform;
+    transform:translateZ(0);
   }
+
+  /* lightweight static shadow; avoids filtering the entire 3D envelope */
+  .envelope-scene::after{
+    content:"";
+    position:absolute;
+    left:7%; right:7%; bottom:-18px; height:28px;
+    background:rgba(0,0,0,0.20);
+    border-radius:50%;
+    filter:blur(10px);
+    z-index:-1;
+    pointer-events:none;
+  }
+
+  /* envelope body: modern off-white with subtle depth */
   .envelope-body{
     position:absolute; inset:0;
-    background:var(--blush);
-    border-radius:6px;
-    box-shadow:0 36px 70px rgba(0,0,0,0.5);
+    background:linear-gradient(145deg, #FAF8F3 0%, #F2EDE4 50%, #EDE8DD 100%);
+    border-radius:8px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.8),
+      inset 0 -1px 0 rgba(0,0,0,0.04),
+      0 18px 34px rgba(0,0,0,0.24);
     overflow:visible;
     z-index:5;
   }
-  .envelope-body::before, .envelope-body::after{
-    content:""; position:absolute; top:0; width:0; height:0;
-    border-top:80px solid rgba(0,0,0,0.06);
+  /* inner decorative border line */
+  .envelope-body::before{
+    content:""; position:absolute; inset:14px;
+    border:1px solid rgba(184,147,90,0.18);
+    border-radius:4px; pointer-events:none;
   }
+  /* corner ornaments — thin bracket marks echoing the diamond seal */
+  .envelope-body::after{ content:none; }
+
+  /* corner bracket marks — crisp lines + tiny diamond tip, echoes the seal shape */
+  .envelope-corners{ position:absolute; inset:14px; pointer-events:none; z-index:6; }
+  .corner-mark{ position:absolute; width:16px; height:16px; }
+  .corner-mark::before, .corner-mark::after{ content:""; position:absolute; background:rgba(184,147,90,0.55); }
+  .corner-mark::before{ width:100%; height:1px; top:0; left:0; }
+  .corner-mark::after{ width:1px; height:100%; top:0; left:0; }
+  .corner-mark span{
+    position:absolute; width:4px; height:4px; top:-2px; left:-2px;
+    background:var(--gold); transform:rotate(45deg); opacity:0.7;
+  }
+  .corner-mark.tl{ top:0; left:0; }
+  .corner-mark.tr{ top:0; right:0; transform:scaleX(-1); }
+  .corner-mark.bl{ bottom:0; left:0; transform:scaleY(-1); }
+  .corner-mark.br{ bottom:0; right:0; transform:scale(-1,-1); }
+
+  /* envelope flap: clean modern triangle in slightly darker cream */
   .envelope-flap{
     position:absolute; top:0; left:0; width:100%; height:38%;
-    background:linear-gradient(135deg,var(--gold),#a17c47);
+    background:linear-gradient(160deg, #E8E2D6 0%, #DDD6C8 100%);
     clip-path:polygon(0 0, 100% 0, 50% 100%);
     transform-origin:top center;
-    transition:transform 1.1s cubic-bezier(.6,-0.2,.2,1.2);
+    transition:transform 1.2s cubic-bezier(.6,-0.15,.2,1.15);
     z-index:5;
-    box-shadow:0 4px 14px rgba(0,0,0,0.25);
+    will-change:transform;
+  }
+  .envelope-flap::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(255,255,255,0.35) 0%, transparent 60%);
+    pointer-events:none;
   }
   .envelope-scene.open .envelope-flap{ transform:rotateX(180deg); }
 
+  /* -- MODERN SEAL: Diamond / Rhombus shape -- */
   .envelope-seal{
     position:absolute; top:35%; left:50%; transform:translate(-50%,-50%);
-    width:56px; height:56px; border-radius:50%;
-    background:radial-gradient(circle at 35% 30%, #d4a86a, var(--gold) 70%);
+    width:52px; height:52px;
+    background:linear-gradient(135deg, #d4af77 0%, #b8935a 60%, #9a7845 100%);
+    clip-path:polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
     display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-display); font-style:italic; font-size:22px; color:#fff;
-    box-shadow:0 4px 10px rgba(0,0,0,0.35);
-    z-index:6; transition:opacity .3s ease, transform .3s ease;
+    font-family:var(--font-display); font-style:italic; font-size:15px; color:#fff;
+    text-shadow:0 1px 2px rgba(0,0,0,0.2);
+    box-shadow:0 4px 10px rgba(0,0,0,0.18);
+    z-index:6;
+    transition:opacity .35s ease, transform .35s ease;
   }
-  .envelope-scene.open .envelope-seal{ opacity:0; transform:translate(-50%,-50%) scale(.4); }
+  /* wax texture glow behind seal */
+  .envelope-seal::before{
+    content:""; position:absolute; inset:-4px;
+    background:linear-gradient(135deg, #d4af77 0%, #b8935a 100%);
+    clip-path:polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    opacity:0.22; z-index:-1;
+  }
+  /* engraved inner diamond line for a stamped, embossed feel */
+  .envelope-seal::after{
+    content:""; position:absolute; inset:8px;
+    clip-path:polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    border:1px solid rgba(255,255,255,0.45);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,0.15);
+    pointer-events:none;
+  }
+  .envelope-scene.open .envelope-seal{ opacity:0; transform:translate(-50%,-50%) scale(.3) rotate(45deg); }
 
-  .envelope-letter{
-    position:absolute; left:8%; right:8%; bottom:87%;
-    height:20%;
-    background:var(--ivory);
-    border-radius:3px;
-    box-shadow:0 -6px 20px rgba(0,0,0,0.15);
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:8px; padding:18px;
-    transform:translateY(5%);
-    transition:transform 1s cubic-bezier(.22,.61,.36,1) .5s;
-    z-index:2;
-    visibility: hidden;
+  /* subtle lift on hover — invites the tap */
+  #envelope-stage{ cursor:pointer; }
+  #envelope-stage:hover .envelope-scene:not(.open){ transform:translateY(-4px); }
+  .envelope-scene{ transition:transform .4s cubic-bezier(.22,.61,.36,1); }
+  .envelope-scene.open{ transition:none; }
+
+  /* -- DECORATIVE RIBBON peeking from behind -- */
+  .envelope-ribbon{
+    position:absolute; top:-10px; left:50%; transform:translateX(-50%);
+    width:26px; height:44px;
+    background:linear-gradient(180deg, #d4af77 0%, #b8935a 55%, #9a7845 100%);
+    border-radius:0 0 3px 3px;
+    z-index:4;
+    opacity:0.92;
+    box-shadow:0 2px 8px rgba(0,0,0,0.2);
   }
-  .envelope-scene.open .envelope-letter{ transform:translateY(-46%);z-index:5;visibility: visible; }
-  .envelope-scene.open .envelope-flap{ z-index: 4; }
+  /* center fold highlight — reads as folded fabric, not a flat block */
+  .envelope-ribbon::before{
+    content:""; position:absolute; inset:0 0 8px 0;
+    background:linear-gradient(90deg,
+      rgba(0,0,0,0.12) 0%, rgba(255,255,255,0.35) 46%, rgba(255,255,255,0.35) 54%, rgba(0,0,0,0.1) 100%);
+    border-radius:0 0 3px 3px;
+    pointer-events:none;
+  }
+
+  .envelope-ribbon::after{
+    content:""; position:absolute; bottom:-10px; left:50%; transform:translateX(-50%);
+    width:0; height:0;
+    border-left:14px solid transparent;
+    border-right:14px solid transparent;
+    border-top:12px solid #9a7845;
+  }
+
+  /* -- LETTER: thick cotton paper feel -- */
+  .envelope-letter{
+    position:absolute; left:6%; right:6%; bottom:88%;
+    height:22%;
+    background:linear-gradient(180deg, #FFFBF5 0%, #F9F5ED 100%);
+    border-radius:4px;
+    box-shadow:
+      0 -3px 12px rgba(0,0,0,0.10),
+      inset 0 1px 0 rgba(255,255,255,0.9);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:10px; padding:22px;
+    transform:translateY(5%);
+    transition:transform 1.1s cubic-bezier(.22,.61,.36,1) .45s;
+    z-index:2;
+    will-change:transform;
+    visibility:hidden;
+  }
+  /* subtle paper grain texture */
+  .envelope-letter::before{
+    content:""; position:absolute; inset:0; border-radius:4px; pointer-events:none;
+    opacity:0.35;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.015) 2px, rgba(0,0,0,0.015) 4px);
+  }
+  .envelope-scene.open .envelope-letter{ transform:translateY(-52%); z-index:5; visibility:visible; }
+  .envelope-scene.open .envelope-flap{ z-index:4; }
+
   .envelope-letter .el-names{
-    font-family:var(--font-display); font-style:italic; font-size:clamp(26px,5vw,36px); color:var(--ink);
+    font-family:var(--font-display); font-style:italic;
+    font-size:clamp(28px,5.5vw,40px); color:var(--ink);
+    letter-spacing:0.04em;
+  }
+  .envelope-letter .el-line{
+    width:40px; height:1px; background:var(--gold); opacity:0.6;
   }
   .envelope-letter .el-sub{
-    font-size:11px; letter-spacing:.25em; text-transform:uppercase; color:var(--text-soft);
+    font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:var(--text-soft);
   }
 
+  /* hint text */
   .envelope-hint{
-    position:absolute; bottom:-42px; left:0; right:0; text-align:center;
-    color:rgba(255,255,255,0.75); font-size:11px; letter-spacing:.25em; text-transform:uppercase;
-    animation:float 2.6s ease-in-out infinite;
+    position:absolute; bottom:-48px; left:0; right:0; text-align:center;
+    color:rgba(255,255,255,0.7); font-size:11px; letter-spacing:.28em; text-transform:uppercase;
+    animation:float 2.8s ease-in-out infinite;
   }
 
   /* -- language screen -- */
@@ -417,15 +522,16 @@
   }
   #lang-screen.show{ opacity:1; visibility:visible; }
   .lang-inner{
-    text-align:center; padding:44px 40px;
-    background:rgba(250,246,239,0.96);
-    border-radius:6px;
-    box-shadow:0 24px 50px rgba(0,0,0,0.35);
+    text-align:center; padding:48px 44px;
+    background:rgba(250,246,239,0.97);
+    border-radius:8px;
+    box-shadow:0 28px 60px rgba(0,0,0,0.35);
     max-width:90vw;
+    border:1px solid rgba(184,147,90,0.12);
   }
   .lang-title{
     font-family:var(--font-display); font-style:italic; font-size:clamp(22px,4vw,32px);
-    margin-bottom:30px; color:var(--text); opacity:1;
+    margin-bottom:32px; color:var(--text);
   }
   .lang-options{ display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
   .lang-btn{
@@ -439,6 +545,19 @@
   }
   .lang-btn:hover{ background:var(--gold); border-color:var(--gold); color:#fff; transform:translateY(-3px); }
   .lang-btn.ar{ font-family:'Amiri', serif; font-size:18px; }
+
+  /* -- subtle floating particles behind envelope -- */
+  .env-particle{
+    position:absolute; border-radius:50%;
+    background:rgba(184,147,90,0.3);
+    pointer-events:none;
+    animation:envFloat 6s ease-in-out infinite;
+    will-change:transform,opacity;
+  }
+  @keyframes envFloat{
+    0%,100%{ transform:translateY(0) scale(1); opacity:0.3; }
+    50%{ transform:translateY(-20px) scale(1.2); opacity:0.6; }
+  }
 
   /* ---------- SIDE FLORAL DECOR ---------- */
   .side-decor{
@@ -466,10 +585,7 @@
   }
   @media (max-width:640px){ .side-decor{ display:none; } }
 
-  /* ---------- FLOWER PHOTO/GIF SLOT ----------
-     EDIT ME: this is an empty slot for a real flower photo or GIF.
-     Drop your own <img> or <video>/<img> (gif) inside .flower-slot,
-     sized to fill it — see the HTML further down for exactly where. */
+  /* ---------- FLOWER PHOTO/GIF SLOT ---------- */
   .flower-slot{
     width:100%; height:70vh; max-height:640px;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -570,13 +686,13 @@
     .countdown .num.tick{ animation:none; }
     .envelope-flap, .envelope-letter, #intro, #lang-screen{ transition-duration:.2s; }
     .side-decor svg, .flower-slot, .sparkle, .scroll-cue, .photo-placeholder::after{ animation:none !important; }
+    .env-particle{ animation:none !important; }
   }
 </style>
 </head>
 <body>
 
 <!-- ================= BACKGROUND MUSIC ================= -->
-<!-- EDIT ME: keep BG.mp3 in the same folder as this HTML file. -->
 <audio id="bg-music" loop>
   <source src="BG.mp3" type="audio/mpeg">
 </audio>
@@ -592,12 +708,26 @@
 <!-- ================= INTRO: ENVELOPE + LANGUAGE ================= -->
 <div id="intro">
   <div id="envelope-stage">
+    <!-- ambient particles -->
+    <span class="env-particle" style="width:4px;height:4px;top:18%;left:22%;animation-delay:0s;"></span>
+    <span class="env-particle" style="width:6px;height:6px;top:72%;left:78%;animation-delay:1.5s;"></span>
+    <span class="env-particle" style="width:3px;height:3px;top:65%;left:15%;animation-delay:3s;"></span>
+    <span class="env-particle" style="width:5px;height:5px;top:25%;left:75%;animation-delay:2s;"></span>
+
     <div class="envelope-scene" id="envelope">
+      <div class="envelope-ribbon" aria-hidden="true"></div>
       <div class="envelope-letter">
         <div class="el-names">M &amp; S</div>
+        <div class="el-line"></div>
         <div class="el-sub">October 2026</div>
       </div>
       <div class="envelope-body"></div>
+      <div class="envelope-corners" aria-hidden="true">
+        <span class="corner-mark tl"><span></span></span>
+        <span class="corner-mark tr"><span></span></span>
+        <span class="corner-mark bl"><span></span></span>
+        <span class="corner-mark br"><span></span></span>
+      </div>
       <div class="envelope-flap"></div>
       <div class="envelope-seal">M+S</div>
     </div>
@@ -615,9 +745,7 @@
   </div>
 </div>
 
-<!-- ================= DECORATIVE SIDE FLOWERS (fixed, both sides) ================= -->
-<!-- EDIT ME: replace the placeholder inside each .flower-slot with your own image or gif, e.g.:
-     <img src="my-flowers.gif" alt=""> — it will automatically fill the slot and sway gently. -->
+<!-- ================= DECORATIVE SIDE FLOWERS ================= -->
 <div class="side-decor left" aria-hidden="true">
   <div class="flower-slot">
     <img src="flower1.png" alt="">
@@ -643,24 +771,17 @@
   <meta property="og:title" content="M & S">
   <meta property="og:description" content="Welcome to the website for M & S! Explore photos, accommodations, and more on Joy.">
   <meta property="og:image" content="https://aboal3z14.github.io/S-M/preview.jpg">
-  <meta property="og:url" content="https://aboal3z14.github.io/S-M/">
+  <meta property="og:url" content="https://yourdomain.com">
   <meta property="og:type" content="website">
 </header>
 
 <!-- ================= HERO ================= -->
 <section class="hero" id="welcome">
-  <!-- ============================================================
-       Background video — currently set to FIN.mp4
-       Keep FIN.mp4 in the SAME FOLDER as this HTML file.
-       The gradient div below stays as a backup layer in case the
-       video file can't be found, so the hero never looks broken.
-       ============================================================ -->
   <div class="hero-fallback"></div>
   <video autoplay muted loop playsinline>
     <source src="https://cdn.pixabay.com/video/2025/08/28/300368.mp4" type="video/mp4">
   </video>
 
-  <!-- decorative floating sparkles -->
   <span class="sparkle" style="width:5px;height:5px; top:22%; left:18%; animation-delay:.2s;"></span>
   <span class="sparkle" style="width:3px;height:3px; top:35%; left:78%; animation-delay:1.1s;"></span>
   <span class="sparkle" style="width:4px;height:4px; top:65%; left:12%; animation-delay:1.9s;"></span>
@@ -670,7 +791,7 @@
   <div class="hero-inner">
     <div class="hero-eyebrow" data-i18n="hero.eyebrow">We're getting married</div>
     <div class="hero-names">M<span class="hero-amp">&amp;</span>S</div>
-    <div class="hero-date" data-i18n="hero.date"><!-- EDIT ME: exact date --> October 2026</div>
+    <div class="hero-date" data-i18n="hero.date">October 2026</div>
 
     <div class="countdown" id="countdown">
       <div class="cell"><div class="num" id="cd-days">00</div><div class="label" data-i18n="hero.days">Days</div></div>
@@ -696,28 +817,28 @@
 <section class="block reveal" id="schedule">
   <div class="eyebrow" data-i18n="schedule.eyebrow">The Details</div>
   <h2 data-i18n="schedule.title">Schedule</h2>
-  <p class="lede" data-i18n="schedule.lede"><!-- EDIT ME: intro line --> Here's what to expect on the day — more details to follow as we get closer.</p>
+  <p class="lede" data-i18n="schedule.lede">Here's what to expect on the day — more details to follow as we get closer.</p>
 
   <div class="agenda">
     <div class="item">
-      <div class="time"><!-- EDIT ME -->3:30 PM</div>
+      <div class="time">3:30 PM</div>
       <div>
         <div class="title" data-i18n="schedule.ceremony">Ceremony</div>
-        <div class="desc" data-i18n="schedule.venue"><!-- EDIT ME: venue/address --> Venue name, City, State</div>
+        <div class="desc" data-i18n="schedule.venue">Venue name, City, State</div>
       </div>
     </div>
     <div class="item">
-      <div class="time"><!-- EDIT ME -->5:00 PM</div>
+      <div class="time">5:00 PM</div>
       <div>
         <div class="title" data-i18n="schedule.cocktail">Cocktail Hour</div>
-        <div class="desc" data-i18n="schedule.venue2"><!-- EDIT ME --> Venue name, City, State</div>
+        <div class="desc" data-i18n="schedule.venue2">Venue name, City, State</div>
       </div>
     </div>
     <div class="item">
-      <div class="time"><!-- EDIT ME -->6:30 PM</div>
+      <div class="time">6:30 PM</div>
       <div>
         <div class="title" data-i18n="schedule.reception">Reception</div>
-        <div class="desc" data-i18n="schedule.venue3"><!-- EDIT ME --> Venue name, City, State</div>
+        <div class="desc" data-i18n="schedule.venue3">Venue name, City, State</div>
       </div>
     </div>
   </div>
@@ -733,7 +854,7 @@
 <section class="block reveal" id="stay">
   <div class="eyebrow" data-i18n="stay.eyebrow">Accommodations</div>
   <h2 data-i18n="stay.title">Where to Stay</h2>
-  <p class="lede" data-i18n="stay.lede"><!-- EDIT ME --> We've held room blocks at a few nearby hotels for our guests.</p>
+  <p class="lede" data-i18n="stay.lede">We've held room blocks at a few nearby hotels for our guests.</p>
 
   <div class="cards">
     <div class="card">
@@ -783,7 +904,7 @@
   <div class="eyebrow" data-i18n="parking.eyebrow">Getting There</div>
   <h2 data-i18n="parking.title">Parking</h2>
   <p class="lede" data-i18n="parking.lede">
-    <!-- EDIT ME --> Free self-parking is available on-site. Valet is available for an additional fee.
+    Free self-parking is available on-site. Valet is available for an additional fee.
     If you're arriving by rideshare, the drop-off point is at the main entrance.
   </p>
   <div class="photo-placeholder banner">
@@ -802,9 +923,8 @@
 <section class="block reveal" id="request">
   <div class="eyebrow" data-i18n="request.eyebrow">Stay in the loop</div>
   <h2 data-i18n="request.title">Request an Update</h2>
-  <p class="lede" data-i18n="request.lede"><!-- EDIT ME --> Send us a note — a question, a song request, or anything else.</p>
+  <p class="lede" data-i18n="request.lede">Send us a note — a question, a song request, or anything else.</p>
 
-  <!-- EDIT ME: this form doesn't submit anywhere yet; wire it to your own backend, a form service (e.g. Formspree), or a mailto: action -->
   <form onsubmit="event.preventDefault(); alert('Wire this form up to your backend or a form service.');">
     <div>
       <label for="name" data-i18n="request.name">Your Name</label>
@@ -836,31 +956,28 @@
   <div class="faq">
     <details open>
       <summary data-i18n="faq.q1">What should I wear?</summary>
-      <p data-i18n="faq.a1"><!-- EDIT ME -->Cocktail attire. The ceremony and reception are outdoors, so flat shoes are a good idea.</p>
+      <p data-i18n="faq.a1">Cocktail attire. The ceremony and reception are outdoors, so flat shoes are a good idea.</p>
     </details>
     <details>
       <summary data-i18n="faq.q2">Are kids welcome?</summary>
-      <p data-i18n="faq.a2"><!-- EDIT ME -->We love your little ones, but we've decided to make this an adults-only celebration.</p>
+      <p data-i18n="faq.a2">We love your little ones, but we've decided to make this an adults-only celebration.</p>
     </details>
     <details>
       <summary data-i18n="faq.q3">Can I bring a plus one?</summary>
-      <p data-i18n="faq.a3"><!-- EDIT ME -->Please check your invitation for your plus-one status, or reach out to us directly.</p>
+      <p data-i18n="faq.a3">Please check your invitation for your plus-one status, or reach out to us directly.</p>
     </details>
     <details>
       <summary data-i18n="faq.q4">What's the weather like?</summary>
-      <p data-i18n="faq.a4"><!-- EDIT ME -->October days are mild and evenings cool down, so consider bringing a light layer.</p>
+      <p data-i18n="faq.a4">October days are mild and evenings cool down, so consider bringing a light layer.</p>
     </details>
   </div>
 </section>
 
 <footer data-i18n="footer.text">
-  <!-- EDIT ME --> M &amp; S · October 2026
+  M &amp; S · October 2026
 </footer>
 
 <script>
-  /* ============================================================
-     EDIT ME: set the exact wedding date/time here (local time)
-     ============================================================ */
   const WEDDING_DATE = new Date("2026-10-16T17:00:00");
 
   function setNum(el, value){
@@ -868,7 +985,7 @@
     if(el.textContent !== formatted){
       el.textContent = formatted;
       el.classList.remove('tick');
-      void el.offsetWidth; // restart animation
+      void el.offsetWidth;
       el.classList.add('tick');
     }
   }
@@ -933,14 +1050,12 @@
     if(envelope.classList.contains('open')) return;
     envelope.classList.add('open');
     hint.style.opacity = '0';
-    // wait for the flap + letter animation, then show language choices
     setTimeout(() => {
       langScreen.classList.add('show');
     }, prefersReduced ? 150 : 1300);
   }
 
   document.getElementById('envelope-stage').addEventListener('click', openEnvelope);
-  // auto-trigger shortly after load in case the guest doesn't click
   setTimeout(openEnvelope, prefersReduced ? 200 : 1800);
 
   function finishIntro(lang){
@@ -949,12 +1064,10 @@
     document.body.classList.add('ready');
     setTimeout(() => { introEl.style.display = 'none'; }, 850);
 
-    // start background music — this runs inside a click handler,
-    // which counts as user interaction, so browsers allow audio here
     const bgMusic = document.getElementById('bg-music');
     if(bgMusic){
       bgMusic.volume = 0.5;
-      bgMusic.play().catch(() => { /* ignore if the browser still blocks it */ });
+      bgMusic.play().catch(() => {});
     }
   }
 
@@ -974,7 +1087,7 @@
   }
 
   /* ============================================================
-     TRANSLATIONS — EDIT ME to change English/Arabic copy
+     TRANSLATIONS
      ============================================================ */
   const TRANSLATIONS = {
     en: {
@@ -1098,11 +1211,8 @@
     prevBtn.addEventListener('click', () => goTo(index - 1));
     nextBtn.addEventListener('click', () => goTo(index + 1));
 
-    // fix direction for RTL layouts: flex-direction row-reverse would break transforms,
-    // so keep the track LTR internally regardless of page direction.
     track.style.direction = 'ltr';
   });
-
 </script>
 
 </body>
