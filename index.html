@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M & S | October 2026</title>
+<title>Sara & Mohammed | October 2026</title>
+<meta property="og:title" content="Sara & Mohammed | October 2026">
+<meta property="og:site_name" content="Sara & Mohammed Wedding Invitation">
+<meta property="og:description" content="Join Sara and Mohammed for their wedding celebration at Festival Land New Assiut in October 2026.">
+<meta property="og:image" content="https://aboal3z14.github.io/S-M/preview.jpg">
+<meta property="og:url" content="https://aboal3z14.github.io/S-M/">
+<meta property="og:type" content="website">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -61,14 +67,14 @@
     width:fit-content;
     background:rgba(250,246,239,0.95);
     border:1px solid var(--line);
-    border-radius:16px;
-    box-shadow:0 10px 26px rgba(31,58,52,0.10);
-    backdrop-filter:blur(8px);
-    opacity: 0.5;
-    font-weight: bold;
+    border-radius:999px;
+    box-shadow:0 12px 35px rgba(31,58,52,0.14);
+    backdrop-filter:blur(18px);
+    opacity:1;
+    font-weight:400;
   }
   .nav-wrap a{
-    font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    font-size:11px; letter-spacing:.18em; text-transform:uppercase;
     color:var(--ink); position:relative; padding-bottom:4px;
   }
   .nav-wrap a::after{
@@ -76,6 +82,24 @@
     background:var(--gold); transition:width .3s cubic-bezier(.22,.61,.36,1);
   }
   .nav-wrap a:hover::after{ width:100%; }
+
+  /* ---------- LUXURY FINISHING DETAILS ---------- */
+  .hero-monogram{ width:48px; height:48px; margin:0 auto 18px; border:1px solid rgba(197,164,109,.75); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:20px; font-style:italic; color:var(--gold); }
+  .hero-names{ position:relative; width:min(92vw,760px); height:1.9em; margin:0 auto; direction:ltr; white-space:nowrap; line-height:1; }
+  .hero-names .name-top{ position:absolute; z-index:2; right:60%; bottom:55%; }
+  .hero-names .name-bottom{ position:absolute; z-index:2; right:10%; bottom:0; }
+  .hero-names .hero-amp{ position:absolute; z-index:3; left:50%; top:50%; transform:translate(-50%,-50%); margin:0; font-size:.58em; line-height:.7; }
+  .hero-location{ margin-top:10px; font-size:13px; letter-spacing:.18em; text-transform:uppercase; opacity:.82; }
+  .announcement{ max-width:700px; margin:0 auto; padding:58px 24px 26px; text-align:center; }
+  .announcement p{ font-family:var(--font-display); font-size:clamp(25px,4vw,38px); line-height:1.25; color:var(--ink); font-style:italic; }
+  .announcement .small-line{ display:block; width:54px; height:1px; background:var(--gold); margin:22px auto 0; opacity:.7; }
+  .guest-actions{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:28px; }
+  .guest-actions a{ display:inline-flex; align-items:center; justify-content:center; min-width:150px; padding:13px 20px; border:1px solid var(--gold); color:var(--ink); font-size:11px; letter-spacing:.16em; text-transform:uppercase; border-radius:999px; transition:all .25s ease; }
+  .guest-actions a:hover{ background:var(--gold); color:#fff; transform:translateY(-2px); }
+  .intro-kicker{ font-size:10px; letter-spacing:.35em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+  .intro-title{ font-family:var(--font-display); font-size:clamp(28px,6vw,44px); color:var(--ink); font-style:italic; }
+  .intro-date{ margin-top:8px; color:var(--text-soft); font-size:11px; letter-spacing:.2em; text-transform:uppercase; }
+  @media (max-width:640px){ .nav-wrap{ gap:12px; padding:13px 17px; } .nav-wrap a{ font-size:9px; letter-spacing:.12em; } .hero-location{ font-size:10px; letter-spacing:.12em; } .guest-actions a{ width:100%; } }
 
   /* ---------- HERO ---------- */
   .hero{
@@ -496,11 +520,10 @@
   .envelope-scene.open .envelope-letter{ transform:translateY(-52%); z-index:5; visibility:visible; }
   .envelope-scene.open .envelope-flap{ z-index:4; }
 
-  .envelope-letter .el-names{
-    font-family:var(--font-display); font-style:italic;
-    font-size:clamp(28px,5.5vw,40px); color:var(--ink);
-    letter-spacing:0.04em;
-  }
+  .envelope-letter .el-names{ display:flex; align-items:center; justify-content:center; gap:.08em; width:100%; font-family:var(--font-display); font-style:italic; font-size:clamp(22px,5vw,36px); color:var(--ink); letter-spacing:0.01em; white-space:nowrap; direction:ltr; line-height:1; }
+  .envelope-letter .name-top{ position:relative; z-index:2; }
+  .envelope-letter .name-bottom{ position:relative; z-index:2; }
+  .envelope-letter .hero-amp{ position:relative; z-index:3; margin:0 .02em; font-size:.58em; line-height:.7; }
   .envelope-letter .el-line{
     width:40px; height:1px; background:var(--gold); opacity:0.6;
   }
@@ -718,9 +741,10 @@
     <div class="envelope-scene" id="envelope">
       <div class="envelope-ribbon" aria-hidden="true"></div>
       <div class="envelope-letter">
-        <div class="el-names">M &amp; S</div>
+        <div class="intro-kicker" data-i18n="intro.kicker">The Wedding Invitation</div>
+        <div class="el-names"><span class="name-top" data-i18n="couple.last">Mohammed</span><span class="hero-amp">&amp;</span><span class="name-bottom" data-i18n="couple.first">Sara</span></div>
         <div class="el-line"></div>
-        <div class="el-sub">October 2026</div>
+        <div class="intro-date" data-i18n="intro.date">October 2026 · Festival Land New Assiut</div>
       </div>
       <div class="envelope-body"></div>
       <div class="envelope-corners" aria-hidden="true">
@@ -730,9 +754,9 @@
         <span class="corner-mark br"><span></span></span>
       </div>
       <div class="envelope-flap"></div>
-      <div class="envelope-seal">M+S</div>
+      <div class="envelope-seal">S+M</div>
     </div>
-    <div class="envelope-hint" id="envelope-hint">Tap to open</div>
+    <div class="envelope-hint" id="envelope-hint" data-i18n="intro.hint">Open the invitation</div>
   </div>
 
   <div id="lang-screen">
@@ -763,16 +787,11 @@
   <nav class="nav-wrap">
     <a href="#welcome" data-i18n="nav.welcome">Welcome</a>
     <a href="#schedule" data-i18n="nav.schedule">Schedule</a>
-    <a href="#parking" data-i18n="nav.parking">Parking</a>
-    <a href="#request" data-i18n="nav.request">Request</a>
+    <a href="#parking" data-i18n="nav.parking">Directions</a>
+    <a href="#request" data-i18n="nav.request">Memories</a>
     <a href="#faq" data-i18n="nav.faq">Q&amp;A</a>
   </nav>
 
-  <meta property="og:title" content="M & S">
-  <meta property="og:description" content="Welcome to the website for M & S! Explore photos, accommodations, and more on Joy.">
-  <meta property="og:image" content="https://aboal3z14.github.io/S-M/preview.jpg">
-  <meta property="og:url" content="https://aboal3z14.github.io/S-M/">
-  <meta property="og:type" content="website">
 </header>
 
 <!-- ================= HERO ================= -->
@@ -789,9 +808,11 @@
   <span class="sparkle" style="width:3px;height:3px; top:15%; left:60%; animation-delay:2.4s;"></span>
 
   <div class="hero-inner">
+    <div class="hero-monogram" aria-hidden="true">S+M</div>
     <div class="hero-eyebrow" data-i18n="hero.eyebrow">We're getting married</div>
-    <div class="hero-names">M<span class="hero-amp">&amp;</span>S</div>
+    <div class="hero-names"><span class="name-top" data-i18n="couple.last">Mohammed</span><span class="hero-amp">&amp;</span><span class="name-bottom" data-i18n="couple.first">Sara</span></div>
     <div class="hero-date" data-i18n="hero.date">October 2026</div>
+    <div class="hero-location" data-i18n="hero.location">Festival Land New Assiut</div>
 
     <div class="countdown" id="countdown">
       <div class="cell"><div class="num" id="cd-days">00</div><div class="label" data-i18n="hero.days">Days</div></div>
@@ -812,6 +833,12 @@
     <path d="M12 2c-2 4-2 8 0 12s2 8 0 8M12 6c3 1 5 3 5 6s-2 5-5 6M12 6c-3 1-5 3-5 6s2 5 5 6"/>
   </svg>
 </div>
+
+<section class="announcement reveal" aria-label="Welcome message">
+  <div class="eyebrow" data-i18n="announcement.eyebrow">A Joyful Beginning</div>
+  <p data-i18n="announcement.text">“Two hearts, one beautiful beginning, and a day we cannot wait to share with you.”</p>
+  <span class="small-line"></span>
+</section>
 
 <!-- ================= SCHEDULE ================= -->
 <section class="block reveal" id="schedule">
@@ -915,8 +942,19 @@
   </div>
 </section>
 
+<section class="block reveal" id="guest-details">
+  <div class="eyebrow" data-i18n="guest.eyebrow">For Our Guests</div>
+  <h2 data-i18n="guest.title">Make the Day Yours</h2>
+  <p class="lede" data-i18n="guest.lede">Save the date, find your way to the celebration, and share the memories that make this day unforgettable.</p>
+  <div class="guest-actions">
+    <a href="#" id="calendar-link" data-i18n="guest.calendar" aria-label="Add wedding date to calendar">Add to Calendar</a>
+    <a href="https://maps.app.goo.gl/Pi6KJr7WH52WoVsq6" target="_blank" rel="noopener" data-i18n="guest.directions">View Directions</a>
+    <a href="#faq" data-i18n="guest.contact">Guest Information</a>
+  </div>
+</section>
+
 <footer data-i18n="footer.text">
-  M &amp; S · October 2026
+  Sara &amp; Mohammed · October 2026 · Festival Land New Assiut
 </footer>
 
 <script>
@@ -1017,6 +1055,38 @@
     btn.addEventListener('click', () => finishIntro(btn.getAttribute('data-lang-choice')));
   });
 
+  // ---- Add wedding date to calendar ----
+  const calendarLink = document.getElementById('calendar-link');
+  if(calendarLink){
+    calendarLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      const ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Sara and Mohammed//Wedding Invitation//EN',
+        'BEGIN:VEVENT',
+        'UID:sara-mohammed-wedding-2026@festival-land',
+        'DTSTAMP:20260101T000000Z',
+        'DTSTART:20261016T150000Z',
+        'DTEND:20261016T220000Z',
+        'SUMMARY:Sara & Mohammed — Wedding Celebration',
+        'LOCATION:Festival Land New Assiut',
+        'DESCRIPTION:Wedding celebration of Sara and Mohammed.',
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\\r\\n');
+      const blob = new Blob([ics], {type:'text/calendar;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const download = document.createElement('a');
+      download.href = url;
+      download.download = 'sara-and-mohammed-wedding.ics';
+      document.body.appendChild(download);
+      download.click();
+      download.remove();
+      URL.revokeObjectURL(url);
+    });
+  }
+
   // ---- Music mute/unmute toggle ----
   const musicToggle = document.getElementById('music-toggle');
   const bgMusicEl = document.getElementById('bg-music');
@@ -1033,10 +1103,14 @@
      ============================================================ */
   const TRANSLATIONS = {
     en: {
+      "couple.first":"Sara", "couple.last":"Mohammed",
+      "intro.kicker":"The Wedding Invitation", "intro.date":"October 2026 · Festival Land New Assiut", "intro.hint":"Open the invitation",
+      "announcement.eyebrow":"A Joyful Beginning", "announcement.text":"“Two hearts, one beautiful beginning, and a day we cannot wait to share with you.”",
+      "guest.eyebrow":"For Our Guests", "guest.title":"Make the Day Yours", "guest.lede":"Save the date, find your way to the celebration, and share the memories that make this day unforgettable.",
       "nav.welcome":"Welcome", "nav.schedule":"Schedule",
-      "nav.parking":"Parking", "nav.request":"Request", "nav.faq":"Q&A",
+      "nav.parking":"Directions", "nav.request":"Memories", "nav.faq":"Q&A",
 
-      "hero.eyebrow":"We're getting married", "hero.date":"October 2026",
+      "hero.eyebrow":"We're getting married", "hero.date":"October 2026", "hero.location":"Festival Land New Assiut",
       "hero.days":"Days", "hero.hours":"Hours", "hero.mins":"Minutes", "hero.secs":"Seconds",
       "hero.scroll":"Scroll",
 
@@ -1059,13 +1133,18 @@
       "faq.q3":"Can I bring a plus one?", "faq.a3":"Please check your invitation for your plus-one status, or reach out to us directly.",
       "faq.q4":"What's the weather like?", "faq.a4":"October days are mild and evenings cool down, so consider bringing a light layer.",
 
-      "footer.text":"M & S · October 2026"
+      "footer.text":"Sara & Mohammed · October 2026 · Festival Land New Assiut",
+      "guest.calendar":"Add to Calendar", "guest.directions":"View Directions", "guest.contact":"Guest Information"
     },
     ar: {
+      "couple.first":"سارة", "couple.last":"محمد",
+      "intro.kicker":"دعوة الزفاف", "intro.date":"أكتوبر ٢٠٢٦ · فستيفال لاند أسيوط الجديدة", "intro.hint":"افتحوا الدعوة",
+      "announcement.eyebrow":"بداية مبهجة", "announcement.text":"قلبان، وبداية جميلة، ويوم لا نطيق انتظار مشاركته معكم.",
+      "guest.eyebrow":"ضيوفنا الأعزاء", "guest.title":"اجعلوا اليوم مميزاً", "guest.lede":"احفظوا الموعد، وتعرّفوا على طريق الوصول إلى الاحتفال، وشاركونا الذكريات التي ستجعل هذا اليوم لا يُنسى.",
       "nav.welcome":"الرئيسية", "nav.schedule":"البرنامج",
-      "nav.parking":"مواقف السيارات", "nav.request":"تواصل معنا", "nav.faq":"أسئلة شائعة",
+      "nav.parking":"الاتجاهات", "nav.request":"الذكريات", "nav.faq":"أسئلة شائعة",
 
-      "hero.eyebrow":"سنتزوج قريباً", "hero.date":"أكتوبر ٢٠٢٦",
+      "hero.eyebrow":"سنتزوج قريباً", "hero.date":"أكتوبر ٢٠٢٦", "hero.location":"فستيفال لاند أسيوط الجديدة",
       "hero.days":"يوم", "hero.hours":"ساعة", "hero.mins":"دقيقة", "hero.secs":"ثانية",
       "hero.scroll":"مرر للأسفل",
 
@@ -1088,7 +1167,8 @@
       "faq.q3":"هل يمكنني إحضار مرافق؟", "faq.a3":"يرجى مراجعة الدعوة لمعرفة إمكانية إحضار مرافق، أو التواصل معنا مباشرة.",
       "faq.q4":"كيف سيكون الطقس؟", "faq.a4":"أجواء أكتوبر معتدلة نهاراً وتميل للبرودة مساءً، لذا يُفضّل إحضار طبقة خفيفة إضافية.",
 
-      "footer.text":"م & س · أكتوبر ٢٠٢٦"
+      "footer.text":"سارة ومحمد · أكتوبر ٢٠٢٦ · فستيفال لاند أسيوط الجديدة",
+      "guest.calendar":"أضف إلى التقويم", "guest.directions":"عرض الاتجاهات", "guest.contact":"معلومات الضيوف"
     }
   };
 
