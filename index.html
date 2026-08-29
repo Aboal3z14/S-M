@@ -86,9 +86,9 @@
   /* ---------- LUXURY FINISHING DETAILS ---------- */
   .hero-monogram{ width:48px; height:48px; margin:0 auto 18px; border:1px solid rgba(197,164,109,.75); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:20px; font-style:italic; color:var(--gold); }
   .hero-names{ position:relative; width:min(92vw,760px); height:1.9em; margin:0 auto; direction:ltr; white-space:nowrap; line-height:1; }
-  .hero-names .name-top{ position:absolute; z-index:2; right:35%; bottom:55%; }
-  .hero-names .name-bottom{ position:absolute; z-index:2; right:5%; bottom:0; }
-  .hero-names .hero-amp{ position:absolute; z-index:3; left:50%; top:67%; transform:translate(-50%,-50%); margin:0; font-size:.58em; line-height:.7; }
+  .hero-names .name-top{ position:absolute; z-index:2; right:60%; bottom:55%; }
+  .hero-names .name-bottom{ position:absolute; z-index:2; right:10%; bottom:0; }
+  .hero-names .hero-amp{ position:absolute; z-index:3; left:50%; top:50%; transform:translate(-50%,-50%); margin:0; font-size:.58em; line-height:.7; }
   .hero-location{ margin-top:10px; font-size:13px; letter-spacing:.18em; text-transform:uppercase; opacity:.82; }
   .announcement{ max-width:700px; margin:0 auto; padding:58px 24px 26px; text-align:center; }
   .announcement p{ font-family:var(--font-display); font-size:clamp(25px,4vw,38px); line-height:1.25; color:var(--ink); font-style:italic; }
@@ -183,12 +183,21 @@
     text-transform:uppercase; opacity:.85; margin-bottom:18px;
   }
   .hero-names{
-    font-family:var(--font-display);
-    font-weight:500;
-    font-size:clamp(48px,9vw,110px);
-    line-height:1;
-    letter-spacing:.01em;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:auto;
   }
+  .hero-names-img{
+    display:none;
+    width:min(92vw,760px);
+    max-width:100%;
+    height:auto;
+    margin:0 auto;
+  }
+  html[data-lang="en"] .hero-names-img.lang-en{ display:block; }
+  html[data-lang="ar"] .hero-names-img.lang-ar{ display:block; }
   .hero-amp{ color:var(--gold); font-style:italic; padding:0 .15em; }
   .hero-date{
     margin-top:22px; font-size:14px; letter-spacing:.25em; text-transform:uppercase;
@@ -872,7 +881,10 @@
   <div class="hero-inner">
     <div class="hero-monogram" aria-hidden="true">S+M</div>
     <div class="hero-eyebrow" data-i18n="hero.eyebrow">We're getting married</div>
-    <div class="hero-names"><span class="name-top" data-i18n="couple.last">Mohammed</span><span class="hero-amp">&amp;</span><span class="name-bottom" data-i18n="couple.first">Sarah</span></div>
+    <div class="hero-names">
+      <img class="hero-names-img lang-en" src="hero-names-en.png" alt="Mohammed & Sarah">
+      <img class="hero-names-img lang-ar" src="hero-names-ar.png" alt="محمد و ساره">
+    </div>
     <div class="hero-date" data-i18n="hero.date">October 2026</div>
     <div class="hero-location" data-i18n="hero.location">Festival Land New Assiut</div>
 
@@ -1177,27 +1189,71 @@
   if(calendarLink){
     calendarLink.addEventListener('click', (event) => {
       event.preventDefault();
+
+      const EVT = {
+        title: 'Sara & Mohammed — Wedding Celebration',
+        location: 'Festival Land New Assiut',
+        description: 'Wedding celebration of Sarah and Mohammed.',
+        start: '20261016T150000Z',
+        end: '20261016T220000Z',
+        uid: 'sarah-mohammed-wedding-2026@festival-land'
+      };
+
+      const ua = navigator.userAgent || navigator.vendor || window.opera || '';
+      const isAndroid = /android/i.test(ua);
+      const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+
+      // Android: Chrome has no reliable "open calendar app" handoff for .ics —
+      // it just silently downloads the file. Almost every Android phone has
+      // Google Calendar, so send it there directly via a deep link instead.
+      if(isAndroid){
+        const gcalUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+          + '&text=' + encodeURIComponent(EVT.title)
+          + '&dates=' + EVT.start + '/' + EVT.end
+          + '&details=' + encodeURIComponent(EVT.description)
+          + '&location=' + encodeURIComponent(EVT.location);
+        window.open(gcalUrl, '_blank');
+        return;
+      }
+
       const ics = [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
         'PRODID:-//Sarah and Mohammed//Wedding Invitation//EN',
+        'CALSCALE:GREGORIAN',
         'BEGIN:VEVENT',
-        'UID:sarah-mohammed-wedding-2026@festival-land',
+        'UID:' + EVT.uid,
         'DTSTAMP:20260101T000000Z',
-        'DTSTART:20261016T150000Z',
-        'DTEND:20261016T220000Z',
-        'SUMMARY:Sara & Mohammed — Wedding Celebration',
-        'LOCATION:Festival Land New Assiut',
-        'DESCRIPTION:Wedding celebration of Sarah and Mohammed.',
+        'DTSTART:' + EVT.start,
+        'DTEND:' + EVT.end,
+        'SUMMARY:' + EVT.title,
+        'LOCATION:' + EVT.location,
+        'DESCRIPTION:' + EVT.description,
         'END:VEVENT',
         'END:VCALENDAR'
-      ].join('\\r\\n');
-      // Navigate directly to the ics data on all devices — this lets browsers
-      // and OSes hand it off to the calendar app/handler directly. A forced
-      // "download" link instead just saves the file silently on many
-      // mobile browsers without ever prompting to add the event.
-      const dataUrl = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
-      window.location.href = dataUrl;
+      ].join('\r\n');
+
+      if(isIOS){
+        // iOS Safari opens the native "Add to Calendar" sheet when navigating
+        // directly to an ics data URI. Forcing a "download" (via the download
+        // attribute) breaks this and just saves the file instead.
+        const dataUrl = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+        window.location.href = dataUrl;
+      } else {
+        // Desktop (Windows/Mac/Linux): browsers have no OS-level handoff to a
+        // calendar app, so the standard, expected behavior here is to
+        // download the .ics — double-clicking it opens Outlook/Apple
+        // Calendar/whatever the user has set as the default handler.
+        const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Sarah-Mohammed-Wedding.ics';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
     });
   }
 
