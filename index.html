@@ -1190,14 +1190,25 @@
     calendarLink.addEventListener('click', (event) => {
       event.preventDefault();
 
-      const EVT = {
-        title: 'Sara & Mohammed — Wedding Celebration',
-        location: 'Festival Land New Assiut',
-        description: 'Wedding celebration of Sarah and Mohammed.',
-        start: '20261016T150000Z',
-        end: '20261016T220000Z',
-        uid: 'sarah-mohammed-wedding-2026@festival-land'
+      const currentLang = document.documentElement.getAttribute('data-lang') === 'ar' ? 'ar' : 'en';
+
+      const EVT_TEXT = {
+        en: {
+          title: 'Sara & Mohammed — Wedding Celebration',
+          location: 'Festival Land New Assiut',
+          description: 'Wedding celebration of Sarah and Mohammed.'
+        },
+        ar: {
+          title: 'سارة ومحمد — حفل الزفاف',
+          location: 'فيستيفال لاند، أسيوط الجديدة',
+          description: 'حفل زفاف سارة ومحمد.'
+        }
       };
+
+      const EVT = Object.assign(
+        { start: '20261016T150000Z', end: '20261016T220000Z', uid: 'sarah-mohammed-wedding-2026@festival-land' },
+        EVT_TEXT[currentLang]
+      );
 
       const ua = navigator.userAgent || navigator.vendor || window.opera || '';
       const isAndroid = /android/i.test(ua);
