@@ -1185,39 +1185,45 @@
   });
 
   // ---- Add wedding date to calendar ----
+  // Drop your two .ics files in the site folder (same folder as index.html),
+  // named exactly:
+  //   wedding-en.ics   (English event)
+  //   wedding-ar.ics   (Arabic event)
+  // Clicking the button downloads whichever one matches the page's current language.
   const calendarLink = document.getElementById('calendar-link');
   if(calendarLink){
     calendarLink.addEventListener('click', (event) => {
       event.preventDefault();
 
       const currentLang = document.documentElement.getAttribute('data-lang') === 'ar' ? 'ar' : 'en';
-
-      const EVT_TEXT = {
-        en: {
-          title: 'Mohammed & Sarah — Katb el-Kitaab and Wedding Celebration',
-          location: 'Festival Land New Assiut',
-          description: 'Wedding celebration of Mohammed & Sarah.'
-        },
-        ar: {
-          title: 'محمد وسارة — كتب كتاب وحفل زفاف',
-          location: 'فيستيفال لاند، أسيوط الجديدة',
-          description: 'حفل زفاف سارة ومحمد.'
-        }
-      };
-
-      const EVT = Object.assign(
-        { start: '20261016T150000Z', end: '20261016T220000Z', uid: 'sarah-mohammed-wedding-2026@festival-land' },
-        EVT_TEXT[currentLang]
-      );
+      const filename = currentLang === 'ar' ? 'wedding-ar.ics' : 'wedding-en.ics';
 
       const ua = navigator.userAgent || navigator.vendor || window.opera || '';
-      const isAndroid = /android/i.test(ua);
       const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+      const isAndroid = /android/i.test(ua);
 
-      // Android: Chrome has no reliable "open calendar app" handoff for .ics —
-      // it just silently downloads the file. Almost every Android phone has
-      // Google Calendar, so send it there directly via a deep link instead.
+      // Android: Chrome has no reliable "open calendar app" handoff for .ics
+      // files — it just silently downloads them. Almost every Android phone
+      // has Google Calendar, so send Android straight there via a deep link
+      // instead, pre-filled with the event details below.
       if(isAndroid){
+        const EVT_TEXT = {
+          en: {
+            title: 'Mohammed & Sarah — Katb el-Kitaab and Wedding Celebration',
+            location: 'Festival Land New Assiut',
+            description: 'Wedding celebration of Mohammed & Sarah.'
+          },
+          ar: {
+            title: 'محمد وسارة — كتب كتاب وحفل زفاف',
+            location: 'فيستيفال لاند، أسيوط الجديدة',
+            description: 'حفل زفاف سارة ومحمد.'
+          }
+        };
+        // Oct 16, 2026, 6:00 PM–11:00 PM Cairo time (UTC+2) → 16:00–21:00 UTC.
+        const EVT = Object.assign(
+          { start: '20261016T160000Z', end: '20261016T210000Z' },
+          EVT_TEXT[currentLang]
+        );
         const gcalUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
           + '&text=' + encodeURIComponent(EVT.title)
           + '&dates=' + EVT.start + '/' + EVT.end
@@ -1227,44 +1233,19 @@
         return;
       }
 
-      const ics = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//Sarah and Mohammed//Wedding Invitation//EN',
-        'CALSCALE:GREGORIAN',
-        'BEGIN:VEVENT',
-        'UID:' + EVT.uid,
-        'DTSTAMP:20260101T000000Z',
-        'DTSTART:' + EVT.start,
-        'DTEND:' + EVT.end,
-        'SUMMARY:' + EVT.title,
-        'LOCATION:' + EVT.location,
-        'DESCRIPTION:' + EVT.description,
-        'END:VEVENT',
-        'END:VCALENDAR'
-      ].join('\r\n');
-
-      if(isIOS){
-        // iOS Safari opens the native "Add to Calendar" sheet when navigating
-        // directly to an ics data URI. Forcing a "download" (via the download
-        // attribute) breaks this and just saves the file instead.
-        const dataUrl = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
-        window.location.href = dataUrl;
-      } else {
-        // Desktop (Windows/Mac/Linux): browsers have no OS-level handoff to a
-        // calendar app, so the standard, expected behavior here is to
-        // download the .ics — double-clicking it opens Outlook/Apple
-        // Calendar/whatever the user has set as the default handler.
-        const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Sarah-Mohammed-Wedding.ics';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      const a = document.createElement('a');
+      a.href = filename;
+      // iOS Safari opens the native "Add to Calendar" sheet when it navigates
+      // directly to an .ics link. Adding the download attribute breaks that
+      // and just saves the file to the Files app instead, so we leave it off
+      // here. Desktop doesn't get that handoff either way, so it keeps the
+      // download attribute for a normal file download.
+      if(!isIOS){
+        a.download = filename;
       }
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     });
   }
 
