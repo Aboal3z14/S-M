@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sarah and Mohammed//Wedding Invitation//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:sarah-mohammed-wedding-2026@festival-land
+DTSTAMP:20260101T000000Z
+DTSTART:20261016T150000Z
+DTEND:20261016T220000Z
+SUMMARY:Mohammed & Sarah — Katb el-Kitaab and Wedding Celebration
+LOCATION:Festival Land New Assiut
+DESCRIPTION:Wedding celebration of Mohammed & Sarah.
+END:VEVENT
+END:VCALENDAR
