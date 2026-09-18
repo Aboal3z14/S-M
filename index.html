@@ -1143,7 +1143,7 @@
         <div class="gb-row">
           <div>
             <label for="gb-name" data-i18n="guestbook.nameLabel">Your Name</label>
-            <input type="text" id="gb-name" maxlength="40" data-i18n-placeholder="guestbook.namePlaceholder" placeholder="e.g. Layla Ahmed" required>
+            <input type="text" id="gb-name" maxlength="40" data-i18n-placeholder="guestbook.namePlaceholder" placeholder="e.g. Motaz Alaa" required>
           </div>
           <div>
             <label for="gb-relation" data-i18n="guestbook.relationLabel">From (optional)</label>
@@ -1562,7 +1562,7 @@
 
       "guestbook.eyebrow":"For The Couple", "guestbook.title":"Leave a Message",
       "guestbook.lede":"A few kind words, a memory, a wish for the years ahead — whatever's in your heart, we'd love to keep it here.",
-      "guestbook.nameLabel":"Your Name", "guestbook.namePlaceholder":"e.g. Layla Ahmed",
+      "guestbook.nameLabel":"Your Name", "guestbook.namePlaceholder":"e.g. Motaz Alaa",
       "guestbook.relationLabel":"From (optional)", "guestbook.relationPlaceholder":"e.g. Sarah's cousin",
       "guestbook.messageLabel":"Your Message", "guestbook.messagePlaceholder":"Write your wishes for Sarah & Mohammed...",
       "guestbook.submit":"Send Message", "guestbook.sending":"Sending...", "guestbook.sent":"Sent — thank you!",
@@ -1616,8 +1616,8 @@
 
       "guestbook.eyebrow":"للعروسين", "guestbook.title":"اترك رسالة",
       "guestbook.lede":"بضع كلمات طيبة، ذكرى، أو أمنية للأيام القادمة — كل ما يخطر في قلبكم، يسعدنا أن نحتفظ به هنا.",
-      "guestbook.nameLabel":"اسمك", "guestbook.namePlaceholder":"مثال: ليلى أحمد",
-      "guestbook.relationLabel":"صلتك بالعروسين (اختياري)", "guestbook.relationPlaceholder":"مثال: ابنة عم سارة",
+      "guestbook.nameLabel":"اسمك", "guestbook.namePlaceholder":"مثال: معتز علاء",
+      "guestbook.relationLabel":"صلتك بالعروسين (اختياري)", "guestbook.relationPlaceholder":"مثال: ابن خال سارة",
       "guestbook.messageLabel":"رسالتك", "guestbook.messagePlaceholder":"اكتب أمنياتك لسارة ومحمد...",
       "guestbook.submit":"إرسال الرسالة", "guestbook.sending":"جارٍ الإرسال...", "guestbook.sent":"تم الإرسال — شكرًا لك!",
       "guestbook.errorEmpty":"يرجى كتابة الاسم والرسالة.",
@@ -1768,7 +1768,7 @@
     appId: "1:732802296260:web:243330d866a9e92a2d1c91"
   };
 
-  const gbConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "AIzaSyAnFMKATLHkI1fHyU0HQh-Y3Q4Gq3doUoE";
+  const gbConfigured = !!firebaseConfig.apiKey && !!firebaseConfig.projectId && !!firebaseConfig.appId;
 
   const gbForm       = document.getElementById('guestbook-form');
   const gbNameInput  = document.getElementById('gb-name');
