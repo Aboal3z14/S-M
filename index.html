@@ -441,7 +441,11 @@
   /* envelope body: modern off-white with subtle depth */
   .envelope-body{
     position:absolute; inset:0;
-    background:linear-gradient(145deg, #FAF8F3 0%, #F2EDE4 50%, #EDE8DD 100%);
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      linear-gradient(145deg, #FAF8F3 0%, #F2EDE4 50%, #EDE8DD 100%);
+    background-blend-mode:overlay, normal;
+    background-size:120px 120px, 100% 100%;
     border-radius:8px;
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.8),
@@ -449,6 +453,15 @@
       0 18px 34px rgba(0,0,0,0.24);
     overflow:visible;
     z-index:5;
+  }
+  /* optional custom pattern/photo layer — drop an image named envelope-texture.png/jpg
+     in the site folder to have it appear on the envelope body (behind the border,
+     seal & flap). If no file is present, this layer is simply removed. */
+  .envelope-body-img{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; border-radius:8px;
+    opacity:0.9; mix-blend-mode:multiply;
+    pointer-events:none; z-index:1;
   }
   /* inner decorative border line */
   .envelope-body::before{
@@ -477,7 +490,11 @@
   /* envelope flap: clean modern triangle in slightly darker cream */
   .envelope-flap{
     position:absolute; top:0; left:0; width:100%; height:38%;
-    background:linear-gradient(160deg, #E8E2D6 0%, #DDD6C8 100%);
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      linear-gradient(160deg, #E8E2D6 0%, #DDD6C8 100%);
+    background-blend-mode:overlay, normal;
+    background-size:120px 120px, 100% 100%;
     clip-path:polygon(0 0, 100% 0, 50% 100%);
     transform-origin:top center;
     transition:transform 1.2s cubic-bezier(.6,-0.15,.2,1.15);
@@ -488,6 +505,16 @@
     content:""; position:absolute; inset:0;
     background:linear-gradient(180deg, rgba(255,255,255,0.35) 0%, transparent 60%);
     pointer-events:none;
+  }
+  /* optional custom pattern/photo layer for the flap — drop an image named
+     envelope-flap-texture.png/jpg in the site folder to have it appear on
+     the flap (e.g. a monogram, floral motif, or wax-paper photo). Removed
+     automatically if the file isn't present. */
+  .envelope-flap-img{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; clip-path:polygon(0 0, 100% 0, 50% 100%);
+    opacity:0.85; mix-blend-mode:multiply;
+    pointer-events:none; z-index:1;
   }
   .envelope-scene.open .envelope-flap{ transform:rotateX(180deg); }
 
@@ -817,14 +844,23 @@
         <div class="el-line"></div>
         <div class="intro-date" data-i18n="intro.date">October 2026 · Festival Land New Assiut</div>
       </div>
-      <div class="envelope-body"></div>
+      <div class="envelope-body">
+        <!-- Optional: drop an image in the site folder as envelope-texture.png/jpg
+             (a subtle pattern, marble, linen, or floral photo works best) to
+             have it show through the envelope body. Safe to leave as-is. -->
+        <img class="envelope-body-img" src="envelope-texture.png" alt="" onerror="this.remove()">
+      </div>
       <div class="envelope-corners" aria-hidden="true">
         <span class="corner-mark tl"><span></span></span>
         <span class="corner-mark tr"><span></span></span>
         <span class="corner-mark bl"><span></span></span>
         <span class="corner-mark br"><span></span></span>
       </div>
-      <div class="envelope-flap"></div>
+      <div class="envelope-flap">
+        <!-- Optional: drop an image in the site folder as envelope-flap-texture.png/jpg
+             (e.g. a monogram or floral motif) to have it show on the flap. -->
+        <img class="envelope-flap-img" src="envelope-flap-texture.png" alt="" onerror="this.remove()">
+      </div>
       <div class="envelope-seal">S+M</div>
     </div>
     <div class="envelope-hint" id="envelope-hint" data-i18n="intro.hint">Open the invitation</div>
@@ -1185,45 +1221,39 @@
   });
 
   // ---- Add wedding date to calendar ----
-  // Drop your two .ics files in the site folder (same folder as index.html),
-  // named exactly:
-  //   wedding-en.ics   (English event)
-  //   wedding-ar.ics   (Arabic event)
-  // Clicking the button downloads whichever one matches the page's current language.
   const calendarLink = document.getElementById('calendar-link');
   if(calendarLink){
     calendarLink.addEventListener('click', (event) => {
       event.preventDefault();
 
       const currentLang = document.documentElement.getAttribute('data-lang') === 'ar' ? 'ar' : 'en';
-      const filename = currentLang === 'ar' ? 'wedding-ar.ics' : 'wedding-en.ics';
+
+      const EVT_TEXT = {
+        en: {
+          title: 'Mohammed & Sarah — Katb el-Kitaab and Wedding Celebration',
+          location: 'Festival Land New Assiut',
+          description: 'Wedding celebration of Mohammed & Sarah.'
+        },
+        ar: {
+          title: 'محمد وسارة — كتب كتاب وحفل زفاف',
+          location: 'فيستيفال لاند، أسيوط الجديدة',
+          description: 'حفل زفاف سارة ومحمد.'
+        }
+      };
+
+      const EVT = Object.assign(
+        { start: '20261016T150000Z', end: '20261016T220000Z', uid: 'sarah-mohammed-wedding-2026@festival-land' },
+        EVT_TEXT[currentLang]
+      );
 
       const ua = navigator.userAgent || navigator.vendor || window.opera || '';
-      const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
       const isAndroid = /android/i.test(ua);
+      const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
 
-      // Android: Chrome has no reliable "open calendar app" handoff for .ics
-      // files — it just silently downloads them. Almost every Android phone
-      // has Google Calendar, so send Android straight there via a deep link
-      // instead, pre-filled with the event details below.
+      // Android: Chrome has no reliable "open calendar app" handoff for .ics —
+      // it just silently downloads the file. Almost every Android phone has
+      // Google Calendar, so send it there directly via a deep link instead.
       if(isAndroid){
-        const EVT_TEXT = {
-          en: {
-            title: 'Mohammed & Sarah — Katb el-Kitaab and Wedding Celebration',
-            location: 'Festival Land New Assiut',
-            description: 'Wedding celebration of Mohammed & Sarah.'
-          },
-          ar: {
-            title: 'محمد وسارة — كتب كتاب وحفل زفاف',
-            location: 'فيستيفال لاند، أسيوط الجديدة',
-            description: 'حفل زفاف سارة ومحمد.'
-          }
-        };
-        // Oct 16, 2026, 6:00 PM–11:00 PM Cairo time (UTC+2) → 16:00–21:00 UTC.
-        const EVT = Object.assign(
-          { start: '20261016T160000Z', end: '20261016T210000Z' },
-          EVT_TEXT[currentLang]
-        );
         const gcalUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
           + '&text=' + encodeURIComponent(EVT.title)
           + '&dates=' + EVT.start + '/' + EVT.end
@@ -1233,19 +1263,44 @@
         return;
       }
 
-      const a = document.createElement('a');
-      a.href = filename;
-      // iOS Safari opens the native "Add to Calendar" sheet when it navigates
-      // directly to an .ics link. Adding the download attribute breaks that
-      // and just saves the file to the Files app instead, so we leave it off
-      // here. Desktop doesn't get that handoff either way, so it keeps the
-      // download attribute for a normal file download.
-      if(!isIOS){
-        a.download = filename;
+      const ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Sarah and Mohammed//Wedding Invitation//EN',
+        'CALSCALE:GREGORIAN',
+        'BEGIN:VEVENT',
+        'UID:' + EVT.uid,
+        'DTSTAMP:20260101T000000Z',
+        'DTSTART:' + EVT.start,
+        'DTEND:' + EVT.end,
+        'SUMMARY:' + EVT.title,
+        'LOCATION:' + EVT.location,
+        'DESCRIPTION:' + EVT.description,
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+
+      if(isIOS){
+        // iOS Safari opens the native "Add to Calendar" sheet when navigating
+        // directly to an ics data URI. Forcing a "download" (via the download
+        // attribute) breaks this and just saves the file instead.
+        const dataUrl = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+        window.location.href = dataUrl;
+      } else {
+        // Desktop (Windows/Mac/Linux): browsers have no OS-level handoff to a
+        // calendar app, so the standard, expected behavior here is to
+        // download the .ics — double-clicking it opens Outlook/Apple
+        // Calendar/whatever the user has set as the default handler.
+        const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Sarah-Mohammed-Wedding.ics';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
       }
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
     });
   }
 
