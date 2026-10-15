@@ -1991,12 +1991,12 @@
     try{ return atob(_e.split('').reverse().join('')); }catch(x){ return ''; }
   }
 
-  var MAX = 2 * 1024 * 1024 * 1024, CONCURRENCY = 2;
-
+  var CONCURRENCY = 2;
+  
   var T = {
     en:{ eyebrow:"Sarah & Mohammed", title:"Share Your Moments",
       lede:"Upload the photos and videos you captured of our day. Pick as many as you like from your phone or camera.",
-      upload:"Upload", hint:"Photos and videos · up to 2 GB each", back:"← Back", lang:"العربية",
+      upload:"Upload", hint:"Photos and Videos", back:"← Back", lang:"العربية",
       note:"Your uploads go straight to the couple. For privacy, this page can't show other guests' photos. Please keep this page open until every file shows “Done”.",
       wait:"Waiting", up:"Uploading", done:"Done", fail:"Failed, tap Upload to retry", big:"Too large", type:"Not a photo/video",
       setup:"Upload isn't set up yet. Please try again later.",
@@ -2004,7 +2004,7 @@
       sumPart:function(ok,bad){ return ok + " uploaded, " + bad + " failed"; } },
     ar:{ eyebrow:"سارة ومحمد", title:"شاركونا لحظاتكم",
       lede:"ارفعوا الصور والفيديوهات التي التقطتموها في يومنا. اختاروا ما تشاؤون من هاتفكم أو كاميراتكم.",
-      upload:"رفع", hint:"صور وفيديوهات · حتى 2 جيجابايت للملف", back:"رجوع ←", lang:"English",
+      upload:"رفع", hint:"صور وفيديوهات", back:"رجوع ←", lang:"English",
       note:"ملفاتكم تصل مباشرة إلى العروسين. حفاظًا على الخصوصية لا تعرض هذه الصفحة صور الضيوف الآخرين. من فضلكم أبقوا هذه الصفحة مفتوحة حتى يظهر «تم» لكل ملف.",
       wait:"في الانتظار", up:"جارٍ الرفع", done:"تم", fail:"فشل، اضغط رفع للمحاولة مجددًا", big:"الملف كبير جدًا", type:"ليس صورة أو فيديو",
       setup:"خدمة الرفع غير مفعّلة بعد. يرجى المحاولة لاحقًا.",
@@ -2080,7 +2080,6 @@
     view.querySelector('#m-list').appendChild(el);
     var j = { file:f, el:el, status:'wait', pct:0, tries:0, mime:guessMime(f) };
     if(!/^(image|video)\//.test(j.mime)){ j.status='fail'; j.reason='type'; }
-    else if(f.size > MAX){ j.status='fail'; j.reason='big'; }
     jobs.push(j); paint(j);
   }
 
