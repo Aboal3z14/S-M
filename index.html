@@ -324,6 +324,53 @@
     transition:background .25s ease, transform .2s ease;
   }
   .card .select-btn:hover{ background:var(--gold); transform:translateY(-2px); }
+  #request .select-btn{
+    display:inline-block; text-align:center; margin-top:26px;
+    background:var(--ink); color:#fff; text-decoration:none;
+    padding:15px 30px; font-size:11px; letter-spacing:.2em;
+    text-transform:uppercase; border-radius:2px;
+    transition:background .25s ease, transform .2s ease;
+  }
+  #request .select-btn:hover{ background:var(--gold); transform:translateY(-2px); }
+
+  /* ============================================================
+     HIDDEN GUEST UPLOAD VIEW (built on demand by script at end of file)
+     ============================================================ */
+  #moments-view{
+    position:fixed; inset:0; z-index:2000; overflow-y:auto; -webkit-overflow-scrolling:touch;
+    background:var(--ivory); color:var(--text);
+    padding:24px 20px 60px; opacity:0; transition:opacity .35s ease;
+  }
+  #moments-view.show{ opacity:1; }
+  #moments-view .m-top{ max-width:560px; margin:0 auto 10px; display:flex; justify-content:space-between; align-items:center; font-size:12px; letter-spacing:.15em; text-transform:uppercase; }
+  #moments-view .m-top button{ color:var(--ink); background:none; border:0; cursor:pointer; font:inherit; letter-spacing:inherit; text-transform:inherit; padding:6px 0; }
+  #moments-view .m-top button:hover{ color:var(--gold); }
+  #moments-view main{ max-width:560px; margin:0 auto; text-align:center; }
+  #moments-view .m-eyebrow{ margin-top:34px; font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); }
+  #moments-view h1{ font-family:var(--font-display); font-weight:500; font-size:clamp(34px,8vw,48px); color:var(--ink); margin:10px 0 14px; line-height:1.1; }
+  html[dir="rtl"] #moments-view h1{ font-family:'Amiri',serif; }
+  #moments-view .m-lede{ color:var(--text-soft); line-height:1.7; font-size:15px; margin:0 auto 6px; max-width:44ch; }
+  #moments-view .m-orn{ margin:22px auto; width:60px; height:1px; background:var(--gold); opacity:.6; }
+  #moments-view .m-drop{ display:block; margin:26px auto 0; background:var(--paper); border:1px solid var(--line); border-radius:4px; padding:34px 20px; cursor:pointer; transition:border-color .2s; }
+  #moments-view .m-drop:hover{ border-color:var(--gold); }
+  #moments-view .m-drop svg{ width:34px; height:34px; color:var(--gold); }
+  #moments-view .m-btn{ display:inline-block; margin-top:16px; background:var(--ink); color:#fff; padding:15px 36px; font-size:12px; letter-spacing:.22em; text-transform:uppercase; border-radius:2px; transition:background .25s, transform .2s; }
+  #moments-view .m-drop:hover .m-btn{ background:var(--gold); transform:translateY(-2px); }
+  #moments-view .m-hint{ margin-top:12px; font-size:12px; color:var(--text-soft); }
+  #moments-view input[type=file]{ display:none; }
+  #moments-view #m-list{ margin-top:26px; display:grid; gap:10px; text-align:start; }
+  #moments-view .m-item{ background:var(--paper); border:1px solid var(--line); border-radius:3px; padding:12px 14px; }
+  #moments-view .m-row{ display:flex; justify-content:space-between; gap:12px; font-size:13px; }
+  #moments-view .m-name{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--ink); }
+  #moments-view .m-state{ flex:none; font-size:12px; color:var(--text-soft); }
+  #moments-view .m-bar{ height:4px; background:var(--blush); border-radius:2px; margin-top:9px; overflow:hidden; }
+  #moments-view .m-bar > i{ display:block; height:100%; width:0; background:var(--gold); transition:width .15s linear; }
+  #moments-view .m-item.done .m-bar > i{ background:#3F7D5B; width:100% !important; }
+  #moments-view .m-item.done .m-state{ color:#3F7D5B; }
+  #moments-view .m-item.fail .m-state{ color:#A4473B; }
+  #moments-view .m-item.fail .m-bar > i{ background:#A4473B; }
+  #moments-view #m-summary{ margin-top:22px; min-height:22px; font-family:var(--font-display); font-size:22px; color:var(--ink); }
+  #moments-view .m-note{ margin-top:34px; font-size:12px; color:var(--text-soft); line-height:1.7; }
 
   /* form */
   form{ margin-top:40px; display:grid; gap:16px; text-align:left; }
@@ -852,7 +899,7 @@
     object-fit:cover; z-index:2;
   }
   .photo-placeholder.qr{
-    aspect-ratio:1/1; max-width:200px; margin:34px auto 0;
+    aspect-ratio:1/1; max-width:240px; margin:34px auto 0;
     background:#fff;
   }
   .photo-placeholder.qr img.placeholder-img{ object-fit:contain; padding:16px; }
@@ -1043,7 +1090,7 @@
 
   <div class="agenda">
     <div class="item">
-      <div class="time">7:00 PM</div>
+      <div class="time">6:30 PM</div>
       <div>
         <div class="title" data-i18n="schedule.ceremony">Ceremony</div>
         <div class="desc" data-i18n="schedule.venue">Venue name, City, State</div>
@@ -1113,13 +1160,13 @@
 <section class="block reveal" id="request">
   <div class="eyebrow" data-i18n="request.eyebrow">Request</div>
   <h2 data-i18n="request.title">Share Your Moment</h2>
-  <p class="lede" data-i18n="request.lede">We'd love to see the wedding through your lens. If you've captured any brilliant shots, moments, the ceremony, the celebrations, or just you having a laugh please share them with us. Head to the drive folder below (or scan the QR code) and upload your photos. It's our way of remembering the day from every angle, and honestly, some of the best memories come from our guests' perspectives.</p>
+  <p class="lede" data-i18n="request.lede">We'd love to see the wedding through your lens. If you've captured any brilliant shots, moments, the ceremony, the celebrations, or just you having a laugh please share them with us. Tap the button below (or scan the QR code) to upload your photos and videos. It's our way of remembering the day from every angle, and honestly, some of the best memories come from our guests' perspectives.</p>
 
-  <a class="select-btn" data-i18n="request.driveBtn" href="#" target="_blank" rel="noopener">Open Drive Folder</a>
+  <a class="select-btn" id="upload-link" data-i18n="request.driveBtn" href="#moments-k7x2" rel="noopener">Upload Photos &amp; Videos</a>
 
   <div class="photo-placeholder qr">
     <!-- Drop your QR code image in the site folder as: qr-code.png -->
-    <img class="placeholder-img" src="qr-code.png" alt="QR code to upload photos" onerror="this.remove()">
+    <img class="placeholder-img" src="qr-code.png" alt="QR code to upload photos and videos" onerror="this.remove()">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM19 14h2v2h-2zM14 19h2v2h-2zM19 19h2v2h-2z"/></svg>
     <span data-i18n="request.qrLabel">Scan QR Code</span>
   </div>
@@ -1344,7 +1391,7 @@
     setTimeout(() => { introEl.style.display = 'none'; }, 850);
 
     const bgMusic = document.getElementById('bg-music');
-    if(bgMusic){
+    if(bgMusic && location.hash !== '#moments-k7x2'){
       bgMusic.volume = 0.5;
       bgMusic.play().catch(() => {});
     }
@@ -1369,7 +1416,7 @@
           description: 'Wedding celebration of Mohammed & Sarah.'
         },
         ar: {
-          title: 'محمد وسارة — عقد القران وحفل زفاف',
+          title: 'محمد وسارة — كتب كتاب وحفل زفاف',
           location: 'فيستيفال لاند، أسيوط الجديدة',
           description: 'حفل زفاف سارة ومحمد.'
         }
@@ -1591,8 +1638,8 @@
       "parking.photoLabel":"Parking Map / Photo",
 
       "request.eyebrow":"Request", "request.title":"Share Your Moment",
-      "request.lede":"We'd love to see the wedding through your lens. If you've captured any brilliant shots, moments, the ceremony, the celebrations, or just you having a laugh please share them with us. Head to the drive folder below (or scan the QR code) and upload your photos. It's our way of remembering the day from every angle, and honestly, some of the best memories come from our guests' perspectives.",
-      "request.driveBtn":"Open Drive Folder", "request.qrLabel":"Scan QR Code",
+      "request.lede":"We'd love to see the wedding through your lens. If you've captured any brilliant shots, moments, the ceremony, the celebrations, or just you having a laugh please share them with us. Tap the button below (or scan the QR code) to upload your photos and videos. It's our way of remembering the day from every angle, and honestly, some of the best memories come from our guests' perspectives.",
+      "request.driveBtn":"Upload Photos & Videos", "request.qrLabel":"Scan QR Code",
 
       "faq.eyebrow":"Questions? We've tried to cover everything here.", "faq.title":"Q&A",
       "faq.q1":"Are children welcome?", "faq.a1":"Children are absolutely welcome. We'd love to have them celebrate with us.",
@@ -1633,7 +1680,7 @@
 
       "schedule.eyebrow":"التفاصيل", "schedule.title":"البرنامج",
       "schedule.lede":"",
-      "schedule.ceremony":"عقد القران", "schedule.cocktail":"حفل الاستقبال", "schedule.reception":"بداية حفل الزفاف",
+      "schedule.ceremony":"كتب الكتاب", "schedule.cocktail":"حفل الاستقبال", "schedule.reception":"بداية حفل الزفاف",
       "schedule.venue":"قاعة الأفراح", "schedule.venue2":"قاعة الأفراح", "schedule.venue3":"قاعة الأفراح",
 
       "directions.eyebrow":"كيفية الوصول", "directions.title":"الاتجاهات",
@@ -1645,8 +1692,8 @@
       "parking.photoLabel":"خريطة أو صورة موقف السيارات",
 
       "request.eyebrow":"طلب", "request.title":"شاركونا لحظتكم",
-      "request.lede":"نودّ أن نرى الحفل من منظوركم الخاص. إذا التقطتم أي لقطات رائعة، سواء لحظات، أو مراسم الاحتفال، أو أجواء الفرح، أو حتى لحظة ضحك عابرة، فيسعدنا أن تشاركونا إياها. توجهوا إلى مجلد Drive أدناه (أو امسحوا رمز الاستجابة السريعة) وارفعوا صوركم. فهذه طريقتنا لتوثيق ذلك اليوم من كل زاوية، وفي الحقيقة فإن أجمل الذكريات كثيرًا ما تأتي من منظور ضيوفنا.",
-      "request.driveBtn":"افتح مجلد Drive", "request.qrLabel":"امسح رمز الاستجابة السريعة",
+      "request.lede":"نودّ أن نرى الحفل من منظوركم الخاص. إذا التقطتم أي لقطات رائعة، سواء لحظات، أو مراسم الاحتفال، أو أجواء الفرح، أو حتى لحظة ضحك عابرة، فيسعدنا أن تشاركونا إياها. اضغطوا على الزر أدناه (أو امسحوا رمز الاستجابة السريعة) وارفعوا صوركم وفيديوهاتكم. فهذه طريقتنا لتوثيق ذلك اليوم من كل زاوية، وفي الحقيقة فإن أجمل الذكريات كثيرًا ما تأتي من منظور ضيوفنا.",
+      "request.driveBtn":"ارفع الصور والفيديوهات", "request.qrLabel":"امسح رمز الاستجابة السريعة",
 
       "faq.eyebrow":"لديكم أسئلة؟ حاولنا الإجابة عن كل شيء هنا.", "faq.title":"الأسئلة الشائعة",
       "faq.q1":"هل الأطفال مرحّب بهم؟", "faq.a1":"الأطفال مرحّب بهم تمامًا، ويسعدنا أن يحتفلوا معنا.",
@@ -1677,6 +1724,7 @@
       const key = el.getAttribute('data-i18n-placeholder');
       if(dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
     });
+    document.dispatchEvent(new Event('langchange'));
   }
 
   // ---- photo carousels ----
@@ -1928,6 +1976,207 @@
       });
     }
   }
+</script>
+
+<!-- ================= HIDDEN GUEST UPLOAD VIEW =================
+     Not part of the page markup: it is created only when a guest taps the
+     Share button or scans the QR code (address ends with #moments-k7x2). -->
+<script>
+(function(){
+  var HASH = '#moments-k7x2';
+
+  var _e = "==wYlhXZv0WdTZlR1VVawolRPhUT5BTMw9kVwpUapdVSaJFdzUGO5MXe5pkZ1MVTtcXW3End44kayomZxdTS5djdxN0Spp2c5J2Y5Z2SB9ycvM3byNWYt9SbvNmLlx2Zv92ZuQHcpJ3Yz9yL6MHc0RHa";
+  function endpoint(){
+    if(/^https:\/\//.test(_e)) return _e;
+    try{ return atob(_e.split('').reverse().join('')); }catch(x){ return ''; }
+  }
+
+  var MAX = 2 * 1024 * 1024 * 1024, CONCURRENCY = 2;
+
+  var T = {
+    en:{ eyebrow:"Sarah & Mohammed", title:"Share Your Moments",
+      lede:"Upload the photos and videos you captured of our day. Pick as many as you like from your phone or camera.",
+      upload:"Upload", hint:"Photos and videos · up to 2 GB each", back:"← Back", lang:"العربية",
+      note:"Your uploads go straight to the couple. For privacy, this page can't show other guests' photos. Please keep this page open until every file shows “Done”.",
+      wait:"Waiting", up:"Uploading", done:"Done", fail:"Failed, tap Upload to retry", big:"Too large", type:"Not a photo/video",
+      setup:"Upload isn't set up yet. Please try again later.",
+      sumDone:function(n){ return "Thank you! " + n + " file" + (n===1?"":"s") + " uploaded ♥"; },
+      sumPart:function(ok,bad){ return ok + " uploaded, " + bad + " failed"; } },
+    ar:{ eyebrow:"سارة ومحمد", title:"شاركونا لحظاتكم",
+      lede:"ارفعوا الصور والفيديوهات التي التقطتموها في يومنا. اختاروا ما تشاؤون من هاتفكم أو كاميراتكم.",
+      upload:"رفع", hint:"صور وفيديوهات · حتى 2 جيجابايت للملف", back:"رجوع ←", lang:"English",
+      note:"ملفاتكم تصل مباشرة إلى العروسين. حفاظًا على الخصوصية لا تعرض هذه الصفحة صور الضيوف الآخرين. من فضلكم أبقوا هذه الصفحة مفتوحة حتى يظهر «تم» لكل ملف.",
+      wait:"في الانتظار", up:"جارٍ الرفع", done:"تم", fail:"فشل، اضغط رفع للمحاولة مجددًا", big:"الملف كبير جدًا", type:"ليس صورة أو فيديو",
+      setup:"خدمة الرفع غير مفعّلة بعد. يرجى المحاولة لاحقًا.",
+      sumDone:function(n){ return "شكرًا لكم! تم رفع " + n + " ملف ♥"; },
+      sumPart:function(ok,bad){ return "تم رفع " + ok + "، وفشل " + bad; } }
+  };
+
+  var TEMPLATE =
+    '<div class="m-top"><button type="button" id="m-back"></button><button type="button" id="m-lang"></button></div>' +
+    '<main>' +
+      '<div class="m-eyebrow" data-i="eyebrow"></div>' +
+      '<h1 data-i="title"></h1>' +
+      '<p class="m-lede" data-i="lede"></p>' +
+      '<div class="m-orn"></div>' +
+      '<label class="m-drop" for="m-picker">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>' +
+        '<div><span class="m-btn" id="m-uploadBtn" data-i="upload"></span></div>' +
+        '<div class="m-hint" data-i="hint"></div>' +
+      '</label>' +
+      '<input id="m-picker" type="file" multiple accept="image/*,video/*,.heic,.heif">' +
+      '<div id="m-list" aria-live="polite"></div>' +
+      '<div id="m-summary"></div>' +
+      '<p class="m-note" data-i="note"></p>' +
+    '</main>';
+
+  var view = null, jobs = [], running = 0, pushed = false;
+
+  function curLang(){ return document.documentElement.getAttribute('data-lang') === 'ar' ? 'ar' : 'en'; }
+
+  function guessMime(f){
+    if(f.type) return f.type;
+    var ext = (f.name.split('.').pop()||'').toLowerCase();
+    var map = {heic:'image/heic',heif:'image/heif',jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',gif:'image/gif',webp:'image/webp',mp4:'video/mp4',mov:'video/quicktime',m4v:'video/x-m4v',webm:'video/webm','3gp':'video/3gpp'};
+    return map[ext] || '';
+  }
+  function fmt(b){ return b > 1048576 ? (b/1048576).toFixed(1)+' MB' : Math.max(1,Math.round(b/1024))+' KB'; }
+
+  function paint(j){
+    var d = T[curLang()], s = j.status, label = d.wait;
+    if(s==='up') label = d.up + ' ' + j.pct + '%';
+    else if(s==='done') label = d.done;
+    else if(s==='fail') label = j.reason ? d[j.reason] : d.fail;
+    j.el.className = 'm-item' + (s==='done' ? ' done' : (s==='fail' ? ' fail' : ''));
+    j.el.querySelector('.m-state').textContent = label;
+    j.el.querySelector('.m-bar > i').style.width = (s==='up' ? j.pct : (s==='fail' ? 100 : 0)) + '%';
+  }
+
+  function refreshSummary(){
+    if(!view) return;
+    var d = T[curLang()], box = view.querySelector('#m-summary');
+    var ok = jobs.filter(function(j){return j.status==='done';}).length;
+    var bad = jobs.filter(function(j){return j.status==='fail';}).length;
+    var busy = jobs.some(function(j){return j.status==='wait'||j.status==='up';});
+    box.textContent = busy || !jobs.length ? '' : (bad ? d.sumPart(ok,bad) : d.sumDone(ok));
+  }
+
+  function applyText(){
+    if(!view) return;
+    var d = T[curLang()];
+    view.querySelectorAll('[data-i]').forEach(function(el){ el.textContent = d[el.getAttribute('data-i')]; });
+    view.querySelector('#m-back').textContent = d.back;
+    view.querySelector('#m-lang').textContent = d.lang;
+    jobs.forEach(paint);
+    refreshSummary();
+  }
+  document.addEventListener('langchange', applyText);
+
+  function add(f){
+    var el = document.createElement('div');
+    el.className = 'm-item';
+    el.innerHTML = '<div class="m-row"><span class="m-name"></span><span class="m-state"></span></div><div class="m-bar"><i></i></div>';
+    el.querySelector('.m-name').textContent = f.name + '  ·  ' + fmt(f.size);
+    view.querySelector('#m-list').appendChild(el);
+    var j = { file:f, el:el, status:'wait', pct:0, tries:0, mime:guessMime(f) };
+    if(!/^(image|video)\//.test(j.mime)){ j.status='fail'; j.reason='type'; }
+    else if(f.size > MAX){ j.status='fail'; j.reason='big'; }
+    jobs.push(j); paint(j);
+  }
+
+  function pump(){
+    while(running < CONCURRENCY){
+      var j = jobs.find(function(x){ return x.status==='wait'; });
+      if(!j) break;
+      start(j);
+    }
+    refreshSummary();
+  }
+
+  function start(j){
+    var url = endpoint();
+    if(!url){ j.status='fail'; view.querySelector('#m-summary').textContent = T[curLang()].setup; paint(j); return; }
+    running++; j.status='up'; j.pct=0; j.tries++; paint(j);
+    // 1) ask the Apps Script for a private upload session (the Drive folder is never exposed)
+    fetch(url, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+                 body: JSON.stringify({ name:j.file.name, mime:j.mime, size:j.file.size }) })
+      .then(function(r){ return r.json(); })
+      .then(function(r){ if(!r || !r.ok || !r.url) throw new Error('session'); return send(j, r.url); })
+      .then(function(){ j.status='done'; j.pct=100; })
+      .catch(function(){ if(j.tries < 2){ j.status='wait'; } else { j.status='fail'; j.reason=null; } })
+      .then(function(){ running--; paint(j); pump(); });
+  }
+
+  // 2) send the file straight to Google's upload URL, with live progress
+  function send(j, sessionUrl){
+    return new Promise(function(resolve, reject){
+      var x = new XMLHttpRequest();
+      x.open('PUT', sessionUrl);
+      x.upload.onprogress = function(e){ if(e.lengthComputable){ j.pct = Math.round(e.loaded / e.total * 100); paint(j); } };
+      x.onload = function(){ (x.status >= 200 && x.status < 300) ? resolve() : reject(new Error('put')); };
+      x.onerror = function(){ reject(new Error('net')); };
+      x.send(j.file);
+    });
+  }
+
+  function beforeUnload(e){ if(running > 0){ e.preventDefault(); e.returnValue = ''; } }
+
+  function openView(fromHash){
+    if(view) return;
+    view = document.createElement('div');
+    view.id = 'moments-view';
+    view.setAttribute('role', 'dialog');
+    view.setAttribute('aria-modal', 'true');
+    view.innerHTML = TEMPLATE;
+    document.body.appendChild(view);
+    jobs = []; running = 0;
+
+    if(!fromHash){ history.pushState(null, '', HASH); pushed = true; } else { pushed = false; }
+
+    view.querySelector('#m-back').addEventListener('click', closeView);
+    view.querySelector('#m-lang').addEventListener('click', function(){ applyLanguage(curLang()==='ar' ? 'en' : 'ar'); });
+    view.querySelector('#m-picker').addEventListener('change', function(e){
+      var files = Array.prototype.slice.call(e.target.files); e.target.value = '';
+      files.forEach(add); pump();
+    });
+    view.querySelector('#m-uploadBtn').addEventListener('click', function(){
+      jobs.forEach(function(j){ if(j.status==='fail' && !j.reason){ j.status='wait'; j.tries=0; paint(j); } });
+      pump();
+    });
+    window.addEventListener('beforeunload', beforeUnload);
+    applyText();
+    requestAnimationFrame(function(){ view.classList.add('show'); });
+    view.scrollTop = 0;
+  }
+
+  function removeView(){
+    if(!view) return;
+    window.removeEventListener('beforeunload', beforeUnload);
+    view.remove(); view = null;
+  }
+
+  function closeView(){
+    if(!view) return;
+    if(pushed){ history.back(); }                 // popstate handler removes the view
+    else { history.replaceState(null, '', location.pathname + location.search); removeView(); }
+  }
+
+  window.addEventListener('popstate', function(){
+    if(location.hash !== HASH) removeView(); else openView(true);
+  });
+
+  // Share-section button
+  var btn = document.getElementById('upload-link');
+  if(btn) btn.addEventListener('click', function(e){ e.preventDefault(); openView(false); });
+
+  // QR code / direct link: skip the envelope intro and go straight to the upload view
+  if(location.hash === HASH){
+    var pick = ((navigator.language||'').slice(0,2) === 'ar') ? 'ar' : 'en';
+    var lb = document.querySelector('[data-lang-choice="' + pick + '"]');
+    if(lb) lb.click();
+    openView(true);
+  }
+})();
 </script>
 
 </body>
