@@ -919,13 +919,11 @@
   }
   body.ready #music-toggle{ opacity:1; visibility:visible; transform:translateY(0); }
   #music-toggle:hover{ background:var(--gold); color:#fff; }
-  #music-toggle svg{ width:20px; height:20px; }
-  #music-toggle.muted svg path:nth-child(2),
-  #music-toggle.muted svg path:nth-child(3){ display:none; }
-  #music-toggle.muted::after{
-    content:""; position:absolute; width:26px; height:1.6px; background:currentColor;
-    transform:rotate(45deg);
-  }
+  #music-toggle{ padding:0; letter-spacing:0; }   /* the global button{} style adds 40px side padding, which squeezed the icon to nothing */
+  #music-toggle svg{ width:20px; height:20px; flex:none; }
+  #music-toggle .ic-off{ display:none; }
+  #music-toggle.muted .ic-on{ display:none; }
+  #music-toggle.muted .ic-off{ display:block; }
   @media (max-width:640px){ #music-toggle{ bottom:16px; right:16px; } }
 
   @media (prefers-reduced-motion: reduce){
@@ -949,10 +947,16 @@
 </audio>
 
 <button id="music-toggle" aria-label="Mute background music" title="Mute background music">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+  <!-- sound on: speaker with waves -->
+  <svg class="ic-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 9v6h4l5 4V5L8 9H4z"/>
     <path d="M16.5 8.5a5 5 0 0 1 0 7"/>
     <path d="M19 6a9 9 0 0 1 0 12"/>
+  </svg>
+  <!-- muted: speaker with an X -->
+  <svg class="ic-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 9v6h4l5 4V5L8 9H4z"/>
+    <path d="M17 9.5l5 5M22 9.5l-5 5"/>
   </svg>
 </button>
 
@@ -1592,7 +1596,9 @@
     musicToggle.addEventListener('click', () => {
       bgMusicEl.muted = !bgMusicEl.muted;
       musicToggle.classList.toggle('muted', bgMusicEl.muted);
-      musicToggle.setAttribute('aria-label', bgMusicEl.muted ? 'Unmute background music' : 'Mute background music');
+      const musicLabel = bgMusicEl.muted ? 'Unmute background music' : 'Mute background music';
+      musicToggle.setAttribute('aria-label', musicLabel);
+      musicToggle.setAttribute('title', musicLabel);
     });
   }
 
